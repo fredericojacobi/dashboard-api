@@ -1,0 +1,14 @@
+/Contracts/bin/
+/Contracts/obj/
+/DashboardAPI/bin/
+/DashboardAPI/obj/
+/DashboardAPI/appsettings.Development.json/
+/DashboardAPI/appsettings.json/
+/Entities/bin/
+/Entities/obj/
+/Extensions/bin/
+/Extensions/obj/
+/Repositories/obj/
+/Repositories/bin/
+/Services/bin/
+/Services/obj/
