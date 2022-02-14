@@ -9,7 +9,7 @@ namespace Entities.Context
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
-            builder.Property<Guid>("Id").ValueGeneratedOnAdd();;
+            builder.Property<Guid>("Id").ValueGeneratedOnAdd();
             builder.Property<Guid?>("AddressId");
             builder.Property<Guid?>("PackageId");
             builder.Property<DateTime>("DeliveredAt");
@@ -20,7 +20,7 @@ namespace Entities.Context
             builder.HasMany(x => x.OrdersProducts)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId);
-
+            builder.HasOne(x => x.Package).WithOne(x => x.Order).HasForeignKey<Package>(x => x.OrderId);
         }
     }
 }

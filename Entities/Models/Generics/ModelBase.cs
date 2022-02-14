@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Models
+namespace Entities.Models.Generics
 {
     public class ModelBase
     {

@@ -16,8 +16,8 @@ namespace Entities.Context
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")
                 .ValueGeneratedOnUpdate();
-            builder.HasOne(p => p.Order)
-                .WithOne(x => x.Package);
+            builder.HasOne(x => x.Order).WithOne(x => x.Package).HasForeignKey<Order>(x => x.PackageId);
+            builder.HasOne(x => x.Team).WithMany(x => x.Packages).HasForeignKey(x => x.TeamId);
         }
     }
 }

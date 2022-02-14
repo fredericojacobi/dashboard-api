@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Entities.Models.Generics;
 
 namespace Entities.Models
 {
@@ -6,7 +8,8 @@ namespace Entities.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid VehicleId { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public Guid? VehicleId { get; set; }
+        public Vehicle? Vehicle { get; set; }
+        public IEnumerable<Package> Packages { get; set; }
     }
 }

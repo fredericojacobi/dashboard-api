@@ -1,4 +1,5 @@
 ﻿using System;
+using Entities.Models.Generics;
 
 namespace Entities.Models
 {
@@ -6,7 +7,7 @@ namespace Entities.Models
     {
         public Guid? OrderId { get; set; }
         public Guid? TeamId { get; set; }
-        public Order Order { get; set; }
-        public Team Team { get; set; }
+        public Order? Order { get; set; }
+        public Team? Team { get; set; }
     }
 }
