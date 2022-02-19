@@ -11,7 +11,6 @@ namespace Entities.Context
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
             builder.Property<Guid?>("AddressId");
-            builder.Property<Guid?>("PackageId");
             builder.Property<DateTime>("DeliveredAt");
             builder.Property<DateTime>("CreatedAt")
                 .ValueGeneratedOnAdd();
@@ -20,7 +19,9 @@ namespace Entities.Context
             builder.HasMany(x => x.OrdersProducts)
                 .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId);
-            builder.HasOne(x => x.Package).WithOne(x => x.Order).HasForeignKey<Package>(x => x.OrderId);
+            builder.HasOne(x => x.Address).WithMany(x => x.Orders).HasForeignKey(x => x.AddressId);
+            builder.Navigation(x => x.Address).AutoInclude();
+            builder.Navigation(x => x.Team).AutoInclude();
         }
     }
 }

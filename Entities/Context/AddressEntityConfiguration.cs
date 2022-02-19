@@ -22,6 +22,44 @@ namespace Entities.Context
             builder.HasMany(x => x.Orders)
                 .WithOne(x => x.Address)
                 .HasForeignKey(x => x.AddressId);
+            builder.HasData(
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    Street = "Avenida Edvaldo Pereira Paiva",
+                    Number = 123,
+                    ZipCode = 92810129,
+                    City = "Porto Alegre",
+                    CreatedAt = DateTime.Now
+                },
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    Street = "Rua dos Tupis",
+                    Number = 456,
+                    ZipCode = 92443875,
+                    City = "Belo Horizonte",
+                    CreatedAt = DateTime.Now
+                },
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    Street = "Rua Cap. Macedo",
+                    Number = 789,
+                    ZipCode = 92938729,
+                    City = "Sao Paulo",
+                    CreatedAt = DateTime.Now
+                },
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    Street = "Rua Teodoro da Silva",
+                    Number = 012,
+                    ZipCode = 92857129,
+                    City = "Rio de Janeiro",
+                    CreatedAt = DateTime.Now
+                }
+            );
         }
     }
 }

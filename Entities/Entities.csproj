@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\DataTransferObjects" />
+      <ProjectReference Include="..\Generics\Generics.csproj" />
     </ItemGroup>
 
 </Project>

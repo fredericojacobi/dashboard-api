@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities.Models.Generics;
+using System.ComponentModel.DataAnnotations.Schema;
+using Generics;
+using Generics.Entities;
+using Newtonsoft.Json;
 
 namespace Entities.Models
 {
@@ -12,6 +15,8 @@ namespace Entities.Models
         public int? ZipCode { get; set; }
         public string City { get; set; }
         public string? Country { get; set; }
+        [NotMapped]
+        [JsonIgnore]
         public IEnumerable<Order> Orders { get; set; }
     }
 }

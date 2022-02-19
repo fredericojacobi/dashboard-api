@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
+using Generics;
 
 namespace Repositories
 {
@@ -14,14 +15,13 @@ namespace Repositories
         {
         }
 
-        public async Task<IEnumerable<Order>> ReadAllOrdersAsync() => await ReadAllAsync();
-
+        public async Task<IList<Order>> ReadAllOrdersAsync() => await ReadAllAsync(x => x.Address, x => x.Team);
+        
         public async Task<Order> ReadOrderAsync(Guid id)
         {
             var result = await ReadByConditionAsync(x => 
                     x.Id.Equals(id),
-                    x => x.Address,
-                    x => x.Package);
+                    x => x.Address);
             return result.FirstOrDefault();
         }
 
@@ -30,6 +30,8 @@ namespace Repositories
             order.CreatedAt = DateTime.Now;
             return await CreateAsync(order);
         }
+
+        public async Task<bool> CreateMultipleOrdersAsync(IList<Order> orders) => await CreateMultipleAsync(orders);
 
         public async Task<Order> UpdateOrderAsync(Order order)
         {

@@ -15,7 +15,7 @@ namespace Repositories
 
         protected RepositoryBase(DashboardContext context) => _context = context;
 
-        public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, bool>>[] includeExpressions)
+        public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, object>>[] includeExpressions)
         {
             var query = _context.Set<T>();
             if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
@@ -31,12 +31,21 @@ namespace Repositories
             return await query.AsNoTracking().ToListAsync();
         }
 
+        public async Task<IList<T>> ReadByQuantityAsync(int quantity) => 
+            await _context.Set<T>().AsNoTracking().Take(quantity).ToListAsync();
+
         public async Task<T> CreateAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
             await _context.Entry(entity).ReloadAsync();
             return entity;
+        }
+
+        public async Task<bool> CreateMultipleAsync(IList<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<T> UpdateAsync(Guid id, T entity)

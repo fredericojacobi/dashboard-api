@@ -24,6 +24,8 @@ namespace Entities.Context
             builder.HasOne(x => x.Product)
                 .WithMany(x => x.OrdersProducts)
                 .HasForeignKey(x => x.ProductId);
+            builder.Navigation(x => x.Order).AutoInclude();
+            builder.Navigation(x => x.Product).AutoInclude();
         }
     }
 }

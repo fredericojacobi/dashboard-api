@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Entities.Models.Generics;
+﻿using System.Collections.Generic;
+using Generics;
+using Generics.Entities;
 
 namespace Entities.Models
 {

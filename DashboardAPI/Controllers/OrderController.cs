@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Contracts.Repositories;
+using AutoMapper;
+using Contracts.Services;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DashboardAPI.Controllers
@@ -13,58 +11,33 @@ namespace DashboardAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private IRepositoryWrapper _repository;
-        public OrderController(IRepositoryWrapper repository) => _repository = repository;
+        private readonly IServiceWrapper _service;
+        private readonly IMapper _mapper;
 
-        [HttpGet("page/{page}")]
-        public async Task<ActionResult> Get(int page)
+        public OrderController(IServiceWrapper service, IMapper mapper)
         {
-            // todo: implementar service layer
-            return Ok();
+            _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] int currentPage, [FromQuery] int recordsPerPage)
         {
-            return Ok(await _repository.Order.ReadAllOrdersAsync());
+            return !_service.Token.Authenticate(HttpContext)
+                ? Ok("User isn't authenticated.")
+                : Ok(await _service.Order.ReadAllOrdersAsync(currentPage, recordsPerPage));
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Order order)
+        [HttpPost("Seed/{quantity}")]
+        public async Task<IActionResult> Post([FromRoute] int quantity)
         {
-            var ord = new Order
-            {
-                Address = new Address
-                {
-                    City = "POA",
-                    Number = 546,
-                    Street = "Avenida Caí",
-                    CreatedAt = DateTime.Now
-                },
-                DeliveredAt = DateTime.MaxValue,
-                Package = new Package
-                {
-                    Team = new Team
-                    {
-                        Description = "time",
-                        Name = "name",
-                        CreatedAt = DateTime.Now
-                    },
-                    CreatedAt = DateTime.Now,
-                    
-                },
-                CreatedAt = DateTime.Now
-            };
-            return Ok(await _repository.Order.CreateOrderAsync(ord));
+            return Ok(await _service.Order.CreateMultipleOrdersAsync(quantity));
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put()
+        public async Task<IActionResult> Put()
         {
             return Ok();
         }
-
-        [HttpDelete]
-        public async Task<ActionResult> Delete() => throw new NotImplementedException();
     }
 }
